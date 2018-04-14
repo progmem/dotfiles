@@ -33,7 +33,11 @@ digest_dot_symlink() {
         echo "f) $line"
       elif [[ -d "$line" ]]; then
         echo "d) $line"
-      fi 
+      else
+        continue
+      fi
+
+      ln -sFn "$(realpath $line)" "${tgtdir}/${line}" 
     fi
   # Note the extra echo at the end; this is to catch any files that don't have a newline at the end.
   done < <(cat .symlink | envsubst && echo)
