@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# Checks for a .symlink in the current directory.
+# If present, digests the file format.
+digest_dot_symlink() {
+  # If there is no .symlink in our directory, return an error.
+  [ -s ".symlink" ] || return 1
+  echo "Found .symlink file at $PWD, digesting..."  
+
+  # We'll initialize tgtdir to a blank variable.
+  # We will not link files unless we have a directory that is valid.
+  tgtdir=""
+
+  # Now we'll start digesting the contents of our .symlink file.
+  while read line; do
+    # If a comment looks like an absolute path, we'll treat it as somewhere to symlink to.
+    if [[ "$line" == \#\ \/* ]]; then
+      tgtdir="${line#\# }"
+      # We'll check if this path already exists.
+      # If it doesn't, we'll attempt to make it.
+      [ ! -d "$tgtdir" ] && echo "mkdir -p $tgtdir &>/dev/null"
+      # Once an attempt was made, we'll test again.
+      # If it's not a directory, then we'll blank out our tgtdir.
+      [ ! -d "$tgtdir" ] && tgtdir=""
+
+      [ -d "$tgtdir" ] && echo "Symlinking the following to $tgtdir:"
+    # If a comment looks like a comment, we'll treat it like a comment!
+    elif [[ "$line" == \#* ]]; then
+      echo "$line"
+    # If a tgtdir is set, then we can start symlinking.
+    elif [ ! -z "$tgtdir" ]; then
+      # We'll check if our symlink target exists.
+      if   [[ -f "$line" ]]; then
+        echo "f) $line"
+      elif [[ -d "$line" ]]; then
+        echo "d) $line"
+      fi 
+    fi
+  # Note the extra echo at the end; this is to catch any files that don't have a newline at the end.
+  done < <(cat .symlink | envsubst && echo)
+}
+
+export -f digest_dot_symlink
+
+find . -iname ".symlink" -execdir bash -c digest_dot_symlink \;
