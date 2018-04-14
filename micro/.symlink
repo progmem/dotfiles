@@ -1,0 +1,5 @@
+# $XDG_CONFIG_HOME/micro
+# We could symlink this entire folder, but micro will create additional directories that we may not want in this repository.
+# A good example would be the "buffers" folder, which contains a history file that could be detrimental if leaked. 
+bindings.json
+settings.json

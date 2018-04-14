@@ -1,0 +1,8 @@
+[user]
+# User Information
+	name = Jason DeLeon
+	email = jason@progmem.space
+[core]
+# Tell less to send the termcap initialization and deinitialization.
+# This allows less to take up the entire buffer and exit without overwriting the screen.
+pager = less -+X
