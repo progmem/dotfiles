@@ -5,4 +5,6 @@
 [core]
 # Tell less to send the termcap initialization and deinitialization.
 # This allows less to take up the entire buffer and exit without overwriting the screen.
-pager = less -+X
+# NOTE: Use '-+X' only with GNU less, and only v530 or greater.
+# -+X will break -F and cause the pager to silently fail.
+pager = less -FR -+X
