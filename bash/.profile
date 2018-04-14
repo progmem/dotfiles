@@ -26,7 +26,7 @@ done
 ### LOCAL BIN
 # Add the user's .local/bin to the PATH.
 if [[ ! "$PATH" == *$HOME/.local/bin* ]]; then
-	export PATH="$PATH:$HOME/.local/bin"
+	export PATH="$HOME/.local/bin:$PATH"
 fi
 
 
@@ -49,3 +49,16 @@ fi
 # Load RVM into a shell session. RVM is loaded as a function.
 RVM_LOCATION="$HOME/.rvm/scripts/rvm"
 [[ -s "$RVM_LOCATION" ]] && source "$RVM_LOCATION"
+
+
+### LESS
+# Test for tput; if available, then we'll make less ~pretty~.
+if tput setaf 1 &>/dev/null; then
+  export LESS_TERMCAP_mb=$(tput bold; tput setaf 1)  # begin bold
+  export LESS_TERMCAP_md=$(tput bold; tput setaf 6) # begin blink
+  export LESS_TERMCAP_me=$(tput sgr0)  # reset bold/blink
+  export LESS_TERMCAP_so=$(tput rev)   # begin reverse video
+  export LESS_TERMCAP_se=$(tput sgr0)  # reset reverse video
+  export LESS_TERMCAP_us=$(tput smul)  # begin underline
+  export LESS_TERMCAP_ue=$(tput sgr0)  # reset underline
+fi
