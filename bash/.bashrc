@@ -28,6 +28,10 @@ export PROMPT_COMMAND='history -a'
 # Append commands to the history file instead of overwriting.
 shopt -s histappend
 
+### AUTOCOMPLETE
+# Source bash_completion, if it's installed and we're on OSX.
+# In most Linux distros, this will be sourced automatically.
+[[ -s $(brew --prefix)/etc/bash_completion ]] && source $(brew --prefix)/etc/bash_completion
 
 ### ALIASES
 # We'll hold these in a separate file.
