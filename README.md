@@ -1,7 +1,7 @@
 # These are my dotfiles.
-There are many like it, but this one is mine.
+There are many like them, but these ones are mine.
 
-Mine, like everyone else's dotfiles, are works in progress. These will evolve.
+Mine, like everyone else's dotfiles, are works in progress. Things evolve and change over time, and having a repository to track these changes provides both a means to revert and a way to journal why I would change things.
 
 
 
