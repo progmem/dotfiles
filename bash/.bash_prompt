@@ -113,7 +113,7 @@ else
 fi
 
 
-### PS11
+### PS1
 # Set the terminal title and prompt.
 PS1="\[\$(__command_color_ps1__ \$?)\][\$?] " # Command prompt and color, goes first!
 PS1+="\[${userStyle}\]\u"         # user
