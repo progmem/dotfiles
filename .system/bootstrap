@@ -36,8 +36,10 @@ digest_dot_symlink() {
       else
         continue
       fi
-
-      ln -sFn "$(realpath $line)" "${tgtdir}/${line}" 
+      
+      # We have a small problem here, in that -F means something completely different between OSX and Linux.
+      # So, we'll try twice: once with -fns, which in a Linux environment should remove the destination file, and again with -F to make OSX happy.
+      ln -fns "$(realpath $line)" "${tgtdir}/${line}" || ln -FFns "$(realpath $line)" "${tgtdir}/${line}"
     fi
   # Note the extra echo at the end; this is to catch any files that don't have a newline at the end.
   done < <(cat .symlink | envsubst && echo)
@@ -45,4 +47,22 @@ digest_dot_symlink() {
 
 export -f digest_dot_symlink
 
+# If you're running this script, most likely you're wanting to run it for this git repository. So, how can we guarantee that?
+# Shoutouts to https://stackoverflow.com/questions/59895/getting-the-source-directory-of-a-bash-script-from-within for this and the top answer, by the way.
+# Start by resolving BASH_SOURCE[0] until it's no longer a symlink.
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do
+  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  # If SOURCE is a relative symlink, resolve it relative to the path where the link was found.
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+# Now we can simply go to that directory.
+cd "$DIR"
+
+# Now that we're here, we should be in a git repository. If we are, we'll jump to the top-level folder.
+# Otherwise, we'll go up a folder, assuming this is in the .system directory.
+cd $(git rev-parse --show-toplevel) || cd ..
+# Finally, we'll find and process any .symlink files.
 find . -iname ".symlink" -execdir bash -c digest_dot_symlink \;
