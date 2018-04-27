@@ -38,3 +38,11 @@ shopt -s histappend
 if [ -f ~/.bash_aliases ]; then
 	source ~/.bash_aliases
 fi
+
+### OTHER EXPORTS
+# Crystal relies on OpenSSL, which requires PKG_CONFIG_PATH be set.
+# This is only needed for macOS High Sierra.
+if [ $(uname -s) = "Darwin" ] && [ $(uname -r | cut -d. -f1) -ge 17 ]; then
+	export PKG_CONFIG_PATH=/usr/local/opt/openssl/lib/pkgconfig
+fi
+
