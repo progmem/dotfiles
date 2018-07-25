@@ -27,6 +27,11 @@ mkdir -p "$XDG_CONFIG_HOME"
 [ -s "$HOME/.pathrc" ] && source "$HOME/.pathrc"
 
 ### RVM
+# TODO: Make this POSIX-compliant?
+# RVM's path can go to .pathrc.
+# However, I need to look at RVM_LOCATION to make sure these are as well.
+# The original syntax was rvm's, so this might be bash-only.
+
 # Add RVM to the PATH.
 if [[ ! "$PATH" == *$HOME/.rvm/bin* ]]; then
 	export PATH="$PATH:$HOME/.rvm/bin"
@@ -35,8 +40,7 @@ fi
 RVM_LOCATION="$HOME/.rvm/scripts/rvm"
 [[ -s "$RVM_LOCATION" ]] && source "$RVM_LOCATION"
 
-
-### LESS
+### Less
 # Test for tput; if available, then we'll make less ~pretty~.
 if tput setaf 1 &>/dev/null; then
   export LESS_TERMCAP_mb=$(tput bold; tput setaf 1)  # begin bold
