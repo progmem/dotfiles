@@ -29,5 +29,6 @@ fi
 [ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"
 
 # Finally, we'll set our environment variable for PATHRC. We do this at the absolute end.
-export PATHRC="$HOME/.pathrc"
+# Note that we don't export, as we -don't- want this variable to inherit on parent processes.
+PATHRC="$HOME/.pathrc"
 fi
