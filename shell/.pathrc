@@ -10,25 +10,31 @@
 # Since this file is sourced, we can't exit or break.
 if [ -z "$PATHRC" ]; then
 
-# First, we'll check if brew --prefix runs.
-# If it does, most likely Homebrew is installed, and we can skip this part.
-if ! brew --prefix &>/dev/null; then
-	# If it's not, but Linuxbrew is, we should setup our PATH.
-	[ -d "$HOME/.linuxbrew" ]           && export PATH="$HOME/.linuxbrew/bin:$HOME/.linuxbrew/sbin:$PATH"
-	[ -d "/home/linuxbrew/.linuxbrew" ] && export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH"
-fi
+  # First, we'll check if brew --prefix runs.
+  # If it does, most likely Homebrew is installed, and we can skip this part.
+  if ! brew --prefix &>/dev/null; then
+  	# If it's not, but Linuxbrew is, we should setup our PATH.
+  	[ -d "$HOME/.linuxbrew" ]           && export PATH="$HOME/.linuxbrew/bin:$HOME/.linuxbrew/sbin:$PATH"
+  	[ -d "/home/linuxbrew/.linuxbrew" ] && export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH"
+  fi
+  
+  # At this point we should have either Linuxbrew or Homebrew. We should test for this.
+  # If it's available, we'll update our BREW_PREFIX, MANPATH and INFOPATHs.
+  if brew --prefix &>/dev/null; then
+    export  MANPATH="$(brew --prefix)/share/man:$MANPATH"
+    export INFOPATH="$(brew --prefix)/share/info:$INFOPATH"
+  fi
 
-# At this point we should have either Linuxbrew or Homebrew. We should test for this.
-# If it's available, we'll update our BREW_PREFIX, MANPATH and INFOPATHs.
-if brew --prefix &>/dev/null; then
-	export     MANPATH="$(brew --prefix)/share/man:$MANPATH"
-        export    INFOPATH="$(brew --prefix)/share/info:$INFOPATH"
-fi
-
-# We'll add local binaries to the PATH last. Local binaries and symlinks should take precedence.
-[ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"
-
-# Finally, we'll set our environment variable for PATHRC. We do this at the absolute end.
-# Note that we don't export, as we -don't- want this variable to inherit on parent processes.
-PATHRC="$HOME/.pathrc"
+  # We also want to add any binaries installed as part of compiling Go code.
+  if go version &>/dev/null; then
+    export GOPATH="$HOME/go"
+    export   PATH="$GOPATH/bin:$PATH"
+  fi
+  
+  # We'll add local binaries to the PATH last. Local binaries and symlinks should take precedence.
+  [ -d "$HOME/.local/bin" ] && export PATH="$HOME/.local/bin:$PATH"
+  
+  # Finally, we'll set our environment variable for PATHRC. We do this at the absolute end.
+  # Note that we don't export, as we -don't- want this variable to inherit on parent processes.
+  PATHRC="$HOME/.pathrc"
 fi
