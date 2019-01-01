@@ -42,8 +42,8 @@ bind ^J gotoline main
 
 bind ^Space mark main
 bind ^X cut main
-bind ^C copytext main
-bind ^V uncut main
+bind ^C copy main
+bind ^V paste main
 
 bind ^F whereis main
 bind ^G findnext main
@@ -54,6 +54,6 @@ bind ^Z undo main
 bind ^Y redo main
 
 bind M-A nohelp main
-bind M-L constupdate main
+bind M-L constantshow main
 
 bind M-Z suspend main
