@@ -19,15 +19,16 @@ export HISTCONTROL=ignoredups
 shopt -s histappend
 
 ### Bash Completion
-# Source Homebrew/Linuxbrew's bash_completion, if it's installed.
+# Homebrew/Linuxbrew
 [[ -s "$(brew --prefix)/etc/bash_completion" ]] && source "$(brew --prefix)/etc/bash_completion"
+# RVM
+[[ -s "${rvm_path}/scripts/completion" ]] && source "${rvm_path}/scripts/completion"
 
 ### Bash Aliases
 # We'll hold these in a separate file.
 [[ -s "$HOME/.bash_aliases" ]] && source "$HOME/.bash_aliases"
 
-### Application-Specific
-### FZF
+### Bash Prompt
 # Allow for auto-completion by typing "**" and hitting tab.
 [[ $- == *i* ]] && source "$(brew --prefix)/opt/fzf/shell/completion.bash" 2>/dev/null
 # Allow fzf to add keybindings to bash.
