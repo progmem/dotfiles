@@ -1,4 +1,7 @@
-include /usr/local/Cellar/nano/3.2/share/nano/*.nanorc
+# For syntax highlighting, git clone git@github.com:scopatz/nanorc.git ~/.nano-syntax
+include ~/.nano-syntax/*.nanorc
+# You can also use the following with Homebrew:
+# include /usr/local/Cellar/nano/3.2/share/nano/*.nanorc
 
 set titlecolor  brightblack,white
 set numbercolor brightblue
