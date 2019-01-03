@@ -6,6 +6,8 @@ set errorcolor  brightred
 set statuscolor brightblue
 set keycolor    brightblue
 
+set afterends
+set smarthome
 set mouse
 set morespace
 set multibuffer
@@ -27,6 +29,12 @@ set zap
 unbind ^K main
 unbind ^U main
 unbind ^W main
+
+unbind M-H main
+unbind M-B main
+
+bind M-B prevword main
+bind M-F nextword main
 
 bind ^O insert main
 bind ^S writeout main
