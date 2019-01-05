@@ -6,6 +6,8 @@
 # If italics are available and our current TERM is screen-256color, upgrade it to allow tput to recognize italics.
 if [[ "$TERM" == "screen-256color"* ]] && infocmp screen-256color-italic &>/dev/null; then
 	export TERM=screen-256color-italic
+else
+	export TERM=screen-256color
 fi
 
 ### Language Defaults
