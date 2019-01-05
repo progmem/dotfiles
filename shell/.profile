@@ -2,6 +2,12 @@
 # Inspired by Steffan Lippens
 #   http://stefaanlippens.net/my_bashrc_aliases_profile_and_other_stuff/
 
+### Terminal - Italics Availability
+# If italics are available and our current TERM is screen-256color, upgrade it to allow tput to recognize italics.
+if [[ "$TERM" == "screen-256color"* ]] && infocmp screen-256color-italic &>/dev/null; then
+	export TERM=screen-256color-italic
+fi
+
 ### Language Defaults
 # When a language is not set, we'll go ahead and set a preferred default.
 [ -z "$LANG" ] && export LANG="en_US.UTF-8"

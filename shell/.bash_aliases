@@ -8,8 +8,7 @@ alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
 
-
-### COLOR ###
+### COLOR AND STYLES ###
 # ls shortcuts are useful, especially when colorful.
 ALIAS_LS_COLOR="--color=auto"
 # BSD ls, however, is a pain. We'll check for it and use -G.
@@ -20,11 +19,12 @@ esac
 alias ls="ls     ${ALIAS_LS_COLOR}"
 alias ll="ls -l  ${ALIAS_LS_COLOR}"
 alias la="ls -al ${ALIAS_LS_COLOR}"
-
 # grep is also useful with color.
 # BSD ls is much nicer here, thankfully.
 alias grep='grep --color=auto'
-
+# tmux needs to be instructed to use the screen-256color TERM.
+# This is part of a long-winded solution for getting italics to work in tmux.
+alias tmux='TERM=screen-256color tmux'
 
 ### RUBY ###
 # Use pry instead of irb, since pry works really well when you add fzf to it.
