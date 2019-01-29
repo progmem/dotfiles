@@ -38,6 +38,7 @@ unbind M-B main
 
 bind M-B prevword main
 bind M-F nextword main
+bind M- cutwordleft main
 
 bind ^O insert main
 bind ^S writeout main
