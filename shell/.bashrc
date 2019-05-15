@@ -23,6 +23,8 @@ shopt -s histappend
 [[ -s "$(brew --prefix)/etc/bash_completion" ]] && source "$(brew --prefix)/etc/bash_completion"
 # RVM
 [[ -s "${rvm_path}/scripts/completion" ]] && source "${rvm_path}/scripts/completion"
+# Local Scripts
+[[ -s "${HOME}/.local/etc/bash_completion.d" ]] && source "${HOME}/.local/etc/bash_completion.d"/*
 
 ### Bash Aliases
 # We'll hold these in a separate file.
