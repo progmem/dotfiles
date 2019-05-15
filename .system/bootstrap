@@ -1,4 +1,14 @@
 #!/usr/bin/env bash
+export ENVSUBST="$(which envsubst)"
+if [ -z "${ENVSUBST}" ] && brew --prefix gettext &>/dev/null; then
+	export ENVSUBST="$(brew --prefix gettext)/bin/envsubst"
+fi
+
+[ -z "${ENVSUBST}" ] && exit 1
+
+# Force a .config directory if XDG_CONFIG_HOME isn't set.
+[ -z "${XDG_CONFIG_HOME}" ] && export XDG_CONFIG_HOME="${HOME}/.config"
+
 # Checks for a .symlink in the current directory.
 # If present, digests the file format.
 digest_dot_symlink() {
@@ -42,7 +52,7 @@ digest_dot_symlink() {
       ln -fns "$(realpath $line)" "${tgtdir}/${line}" || ln -FFns "$(realpath $line)" "${tgtdir}/${line}"
     fi
   # Note the extra echo at the end; this is to catch any files that don't have a newline at the end.
-  done < <(cat .symlink | envsubst && echo)
+  done < <(cat .symlink | ${ENVSUBST} && echo)
 }
 
 export -f digest_dot_symlink
