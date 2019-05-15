@@ -1,7 +1,7 @@
 # For syntax highlighting, git clone git@github.com:scopatz/nanorc.git ~/.nano-syntax
-include ~/.nano-syntax/*.nanorc
+# include ~/.nano-syntax/*.nanorc
 # You can also use the following with Homebrew:
-# include /usr/local/Cellar/nano/3.2/share/nano/*.nanorc
+include /usr/local/Cellar/nano/4.2/share/nano/*.nanorc
 
 set titlecolor  brightblack,white
 set numbercolor brightblue
@@ -10,23 +10,23 @@ set statuscolor brightblue
 set keycolor    brightblue
 
 set afterends
-set smarthome
-set mouse
-set morespace
-set multibuffer
-set noconvert
-# set nohelp            # perhaps comment out until comfortable
-set nowrap
-set quickblank
-set regexp
-set softwrap
 set atblanks
-set showcursor
-set smooth
-set suspend
-set tabsize 2
 set constantshow
 set linenumbers
+set morespace
+set mouse
+set multibuffer
+set noconvert
+set nowrap
+set positionlog
+set quickblank
+set regexp
+set showcursor
+set smarthome
+set smooth
+set softwrap
+set suspend
+set tabsize 2
 set zap
 
 unbind ^K main
@@ -38,7 +38,7 @@ unbind M-B main
 
 bind M-B prevword main
 bind M-F nextword main
-bind M- cutwordleft main
+bind ^W cutwordleft main
 
 bind ^O insert main
 bind ^S writeout main
@@ -60,7 +60,7 @@ bind ^V paste main
 bind ^F whereis main
 bind ^G findnext main
 bind M- findprevious main
-bind ^H replace main
+# bind ^H replace main
 
 bind ^Z undo main
 bind ^Y redo main
