@@ -13,9 +13,9 @@ if [ -z "$PATHRC" ]; then
   # First, we'll check if brew --prefix runs.
   # If it does, most likely Homebrew is installed, and we can skip this part.
   if ! brew --prefix &>/dev/null; then
-  	# If it's not, but Linuxbrew is, we should setup our PATH.
-  	[ -d "$HOME/.linuxbrew" ]           && export PATH="$HOME/.linuxbrew/bin:$HOME/.linuxbrew/sbin:$PATH"
-  	[ -d "/home/linuxbrew/.linuxbrew" ] && export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH"
+		# If it's not, but Linuxbrew is, we should setup our PATH.
+		[ -d "$HOME/.linuxbrew" ]           && export PATH="$HOME/.linuxbrew/bin:$HOME/.linuxbrew/sbin:$PATH"
+		[ -d "/home/linuxbrew/.linuxbrew" ] && export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH"
   fi
   
   # At this point we should have either Linuxbrew or Homebrew. We should test for this.
