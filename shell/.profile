@@ -2,17 +2,20 @@
 # Inspired by Steffan Lippens
 #   http://stefaanlippens.net/my_bashrc_aliases_profile_and_other_stuff/
 
-### Terminal - Italics Availability
-# If italics are available and our current TERM is screen-256color, upgrade it to allow tput to recognize italics.
-if [[ "$TERM" == "screen-256color"* ]] && infocmp screen-256color-italic &>/dev/null; then
-	export TERM=screen-256color-italic
-else
-	export TERM=screen-256color
-fi
+### Path Setup
+# Path setup is deferred to by a custom .pathrc file. This is to make sure that paths are only included once.
+[ -s "$HOME/.pathrc" ] && source "$HOME/.pathrc"
 
 ### Language Defaults
 # When a language is not set, we'll go ahead and set a preferred default.
 [ -z "$LANG" ] && export LANG="en_US.UTF-8"
+
+### XDG Config Home Directory
+# On machines where this isn't set, set it to $HOME/.config
+[ -z "$XDG_CONFIG_HOME" ] && export XDG_CONFIG_HOME="$HOME/.config"
+# This directory -should- exist.
+mkdir -p "$XDG_CONFIG_HOME"
+
 
 ### MOSH Cleanup
 # When a mosh connection is terminated abnormally without any running processes, we should clean it up.
@@ -25,25 +28,12 @@ for pid in $(pidof mosh-server); do
   kill ${pid}
 done
 
-### TMUX Reconnection
-# Reconnect to the nearest-available TMUX session that has no connection. Only do this if not already in a TMUX session.
-# This allows us to immediately drop into an active, already-initialized session.
-# We do this first before any other initialization, but after LANG has been verified as set.
-# We verify LANG has been set first to resolve an issue with tmux on macOS and Powerline characters.
-[ -z "$TMUX" ] && for session in $(tmux ls 2>/dev/null | grep -vi "attached" | cut -d: -f1); do
-  # If we successfully attach to a session, break this loop afterwards.
-  tmux attach -t ${session} && exit 0
-done
+### Terminal - Italics Availability
+# If italics are available and our current TERM is screen-256color, upgrade it to allow tput to recognize italics.
+if [ "$TERM" = "screen-256color" ] && infocmp screen-256color-italic &>/dev/null; then
+	export TERM=screen-256color-italic
+fi
 
-### XDG Config Home Directory
-# On machines where this isn't set, set it to $HOME/.config
-[ -z "$XDG_CONFIG_HOME" ] && export XDG_CONFIG_HOME="$HOME/.config"
-# This directory -should- exist.
-mkdir -p "$XDG_CONFIG_HOME"
-
-### Path Setup
-# Path setup is deferred to by a custom .pathrc file. This is to make sure that paths are only included once.
-[ -s "$HOME/.pathrc" ] && source "$HOME/.pathrc"
 
 ### RVM
 # TODO: Make this POSIX-compliant?
